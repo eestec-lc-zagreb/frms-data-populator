@@ -21,10 +21,11 @@ public class Populator {
             System.setProperty("spring.profiles.active", "production");
         }
 
+        // Starting Spring Application context
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(
                 AppConfig.class, CoreConfig.class);
 
-        UserService userService = ctx.getBean(UserService.class);
+        UserService userService = ctx.getBean(UserService.class); // the way of getting object instances from Spring
         userService
                 .getAllUsers()
                 .forEach(System.out::println);
@@ -40,7 +41,7 @@ public class Populator {
         eventService.getEvents()
                 .forEach(System.out::println);
 
-        ctx.close();
+        ctx.close(); // you should always close context in the end
 
         logger.info("Finishing...");
     }
