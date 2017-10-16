@@ -30,16 +30,21 @@ public class Populator {
                 .getAllUsers()
                 .forEach(System.out::println);
 
+        /*
         TaskService taskService = ctx.getBean(TaskService.class);
         taskService.getTaskByStatus(TaskStatus.ACCEPTED);
+        */
 
         CompanyService companyService = ctx.getBean(CompanyService.class);
         companyService.getCompanies()
                 .forEach(System.out::println);
 
+        /*
         EventService eventService = ctx.getBean(EventService.class);
         eventService.getEvents()
                 .forEach(System.out::println);
+
+        */
 
         ctx.close(); // you should always close context in the end
 
