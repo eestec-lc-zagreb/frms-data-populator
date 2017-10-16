@@ -1,12 +1,11 @@
 package hr.eestec_zg.populator;
 
 import hr.eestec_zg.frmscore.config.CoreConfig;
-import hr.eestec_zg.frmscore.domain.models.TaskStatus;
 import hr.eestec_zg.frmscore.services.CompanyService;
-import hr.eestec_zg.frmscore.services.EventService;
-import hr.eestec_zg.frmscore.services.TaskService;
 import hr.eestec_zg.frmscore.services.UserService;
+import hr.eestec_zg.populator.tocsv.CompanyPopulator;
 import hr.eestec_zg.populator.config.AppConfig;
+import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -36,6 +35,15 @@ public class Populator {
         */
 
         CompanyService companyService = ctx.getBean(CompanyService.class);
+
+
+        //Try writing all companies to CSV
+        try {
+            new CompanyPopulator().writeToCSV(companyService);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         companyService.getCompanies()
                 .forEach(System.out::println);
 
