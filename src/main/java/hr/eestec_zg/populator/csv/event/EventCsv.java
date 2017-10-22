@@ -16,16 +16,16 @@ public class EventCsv {
 
   @CsvBindByName(column = "name")
   @CsvBindByPosition(position = 0)
-  String name;
+  private String name;
   @CsvBindByName(column = "shortName")
   @CsvBindByPosition(position = 1)
-  String shortName;
+  private String shortName;
   @CsvBindByName(column = "year")
   @CsvBindByPosition(position = 2)
-  String year;
+  private String year;
 
 
-  public String getName() {
+  String getName() {
     return name;
   }
 
@@ -33,7 +33,7 @@ public class EventCsv {
     this.name = name;
   }
 
-  public String getShortName() {
+  String getShortName() {
     return shortName;
   }
 
@@ -41,7 +41,7 @@ public class EventCsv {
     this.shortName = shortName;
   }
 
-  public String getYear() {
+  String getYear() {
     return year;
   }
 

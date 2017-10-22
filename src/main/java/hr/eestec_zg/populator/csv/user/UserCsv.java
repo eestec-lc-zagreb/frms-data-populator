@@ -24,29 +24,29 @@ public class UserCsv {
 
   @CsvBindByName(column = "name")
   @CsvBindByPosition(position = 0)
-  String firstName;
+  private String firstName;
   @CsvBindByName(column = "lastName")
   @CsvBindByPosition(position = 1)
-  String lastName;
+  private String lastName;
   @CsvBindByName(column = "email")
   @CsvBindByPosition(position = 2)
-  String email;
+  private String email;
   @CsvBindByName(column = "password")
   @CsvBindByPosition(position = 3)
-  String password;
+  private String password;
   @CsvBindByName(column = "phoneNumber")
   @CsvBindByPosition(position = 4)
-  String phoneNumber;
+  private String phoneNumber;
   @CsvBindByName(column = "role")
   @CsvBindByPosition(position = 5)
-  String role;
+  private String role;
   @CsvBindByName(column = "notes")
   @CsvBindByPosition(position = 6)
-  String notes;
+  private String notes;
 
 
 
-  public String getFirstName() {
+  String getFirstName() {
     return firstName;
   }
 
@@ -54,7 +54,7 @@ public class UserCsv {
     this.firstName = firstName;
   }
 
-  public String getLastName() {
+  String getLastName() {
     return lastName;
   }
 
@@ -62,7 +62,7 @@ public class UserCsv {
     this.lastName = lastName;
   }
 
-  public String getEmail() {
+  String getEmail() {
     return email;
   }
 
@@ -70,7 +70,7 @@ public class UserCsv {
     this.email = email;
   }
 
-  public String getPassword() {
+  String getPassword() {
     return password;
   }
 
@@ -78,7 +78,7 @@ public class UserCsv {
     this.password = password;
   }
 
-  public String getPhoneNumber() {
+  String getPhoneNumber() {
     return phoneNumber;
   }
 
@@ -86,7 +86,7 @@ public class UserCsv {
     this.phoneNumber = phoneNumber;
   }
 
-  public String getRole() {
+  String getRole() {
     return role;
   }
 
@@ -94,7 +94,7 @@ public class UserCsv {
     this.role = role;
   }
 
-  public String getNotes() {
+  String getNotes() {
     return notes;
   }
 

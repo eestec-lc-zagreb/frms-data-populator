@@ -19,25 +19,31 @@ public class CompanyCsv {
 
   @CsvBindByName(column = "name")
   @CsvBindByPosition(position = 0)
+  private
   String name;
   @CsvBindByName(column = "shortName")
   @CsvBindByPosition(position = 1)
+  private
   String shortName;
   @CsvBindByName(column = "webAddress")
   @CsvBindByPosition(position = 2)
+  private
   String webAddress;
   @CsvBindByName(column = "address")
   @CsvBindByPosition(position = 3)
+  private
   String address;
   @CsvBindByName(column = "notes")
   @CsvBindByPosition(position = 4)
+  private
   String notes;
   @CsvBindByName(column = "type")
   @CsvBindByPosition(position = 5)
+  private
   String type;
 
 
-  public String getName() {
+  String getName() {
     return name;
   }
 
@@ -45,7 +51,7 @@ public class CompanyCsv {
     this.name = name;
   }
 
-  public String getShortName() {
+  String getShortName() {
     return shortName;
   }
 
@@ -53,7 +59,7 @@ public class CompanyCsv {
     this.shortName = shortName;
   }
 
-  public String getWebAddress() {
+  String getWebAddress() {
     return webAddress;
   }
 
@@ -61,7 +67,7 @@ public class CompanyCsv {
     this.webAddress = webAddress;
   }
 
-  public String getAddress() {
+  String getAddress() {
     return address;
   }
 
@@ -69,7 +75,7 @@ public class CompanyCsv {
     this.address = address;
   }
 
-  public String getNotes() {
+  String getNotes() {
     return notes;
   }
 
@@ -77,7 +83,7 @@ public class CompanyCsv {
     this.notes = notes;
   }
 
-  public String getType() {
+  String getType() {
     return type;
   }
 
