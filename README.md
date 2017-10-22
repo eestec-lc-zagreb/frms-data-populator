@@ -1,7 +1,5 @@
 # frms-data-populator
 
-# frms-data-populator
-
 Calling should be something like:
 
 //Export from database to CSV
