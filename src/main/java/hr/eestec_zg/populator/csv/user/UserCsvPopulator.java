@@ -6,6 +6,7 @@ import static hr.eestec_zg.populator.csv.CsvHelpers.userToStringArray;
 
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBeanBuilder;
+import hr.eestec_zg.frmscore.domain.models.Role;
 import hr.eestec_zg.frmscore.domain.models.User;
 import hr.eestec_zg.frmscore.services.UserService;
 import java.io.FileNotFoundException;
@@ -38,7 +39,7 @@ public class UserCsvPopulator {
             u.getEmail(),
             u.getPassword(),
             u.getPhoneNumber(),
-            u.getRole(),
+            Role.valueOf(u.getRole()),
             u.getNotes()
         )).forEach(userService::createUser);
   }

@@ -15,13 +15,13 @@ public class EventCsv {
   }
 
   @CsvBindByName(column = "name")
-  @CsvBindByPosition(position = 1)
+  @CsvBindByPosition(position = 0)
   String name;
   @CsvBindByName(column = "shortName")
-  @CsvBindByPosition(position = 2)
+  @CsvBindByPosition(position = 1)
   String shortName;
   @CsvBindByName(column = "year")
-  @CsvBindByPosition(position = 3)
+  @CsvBindByPosition(position = 2)
   String year;
 
 

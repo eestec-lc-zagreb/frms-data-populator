@@ -24,7 +24,6 @@ public class CompanyCsvPopulator {
   }
 
   public void readFromCSV(CompanyService companyService) throws IOException {
-
     List<CompanyCsv> companyList;
     FileReader file = new FileReader(companiesCSV);
     CsvToBeanBuilder<CompanyCsv> csvToBeanBuilder = new CsvToBeanBuilder<>(file);

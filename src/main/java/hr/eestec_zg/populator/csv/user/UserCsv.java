@@ -12,7 +12,7 @@ public class UserCsv {
   }
 
   public UserCsv(String firstName, String lastName, String email, String password,
-      String phoneNumber, Role role, String notes) {
+      String phoneNumber, String role, String notes) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
@@ -39,7 +39,7 @@ public class UserCsv {
   String phoneNumber;
   @CsvBindByName(column = "role")
   @CsvBindByPosition(position = 5)
-  Role role;
+  String role;
   @CsvBindByName(column = "notes")
   @CsvBindByPosition(position = 6)
   String notes;
@@ -86,11 +86,11 @@ public class UserCsv {
     this.phoneNumber = phoneNumber;
   }
 
-  public Role getRole() {
+  public String getRole() {
     return role;
   }
 
-  public void setRole(Role role) {
+  public void setRole(String role) {
     this.role = role;
   }
 
