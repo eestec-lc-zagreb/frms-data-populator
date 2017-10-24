@@ -55,7 +55,7 @@
         <dependency>
             <groupId>hr.eestec_zg</groupId>
             <artifactId>frms-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
 
         <!-- Spring -->
@@ -83,6 +83,11 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>4.0</version>
         </dependency>
     </dependencies>
 
