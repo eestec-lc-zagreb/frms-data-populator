@@ -1,10 +1,15 @@
 package hr.eestec_zg.populator;
 
+import static hr.eestec_zg.populator.Populator.CsvPopulators.readCompaniesFromCsv;
+import static hr.eestec_zg.populator.Populator.CsvPopulators.readEventsFromCsv;
+import static hr.eestec_zg.populator.Populator.CsvPopulators.readUsersFromCsv;
+import static hr.eestec_zg.populator.Populator.CsvPopulators.writeCompaniesToCsv;
+import static hr.eestec_zg.populator.Populator.CsvPopulators.writeEventsToCsv;
+import static hr.eestec_zg.populator.Populator.CsvPopulators.writeUsersToCsv;
+
 import hr.eestec_zg.frmscore.config.CoreConfig;
-import hr.eestec_zg.frmscore.domain.models.TaskStatus;
 import hr.eestec_zg.frmscore.services.CompanyService;
 import hr.eestec_zg.frmscore.services.EventService;
-import hr.eestec_zg.frmscore.services.TaskService;
 import hr.eestec_zg.frmscore.services.UserService;
 import hr.eestec_zg.populator.config.AppConfig;
 import hr.eestec_zg.populator.csv.company.CompanyCsvPopulator;
@@ -15,10 +20,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+
+/**
+ * 1. parameter: "export" or "import"
+ * 2. parameter: "companies" or "users" or "events"
+ * 3. parameter: file name in which data will be saved (export)
+ * or file name from which data will be read (import)
+ *
+ * java -jar populator.jar export companies ./companies.csv
+ */
 public class Populator {
+
     private static final Logger logger = LoggerFactory.getLogger(Populator.class);
     private static final String export = "export";
     private static final String input = "import"; //it's input because import is reserved word
+    private static final String companies = "companies";
+    private static final String users = "users";
+    private static final String events = "events";
+
+    public static String csvName = "";
 
     public static void main(String[] args) {
         logger.info("Starting...");
@@ -27,90 +47,120 @@ public class Populator {
             System.setProperty("spring.profiles.active", "production");
         }
 
-        // Starting Spring Application context
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(
-                AppConfig.class, CoreConfig.class);
+            AppConfig.class, CoreConfig.class);
 
-        //-----------------------------------------------------------------------------
-
-        UserService userService = ctx.getBean(UserService.class); // the way of getting object instances from Spring
         CompanyService companyService = ctx.getBean(CompanyService.class);
         EventService eventService = ctx.getBean(EventService.class);
+        UserService usersService = ctx.getBean(UserService.class);
 
-        //check is it export or import
-        if(args[0].compareTo(export) == 0){
+        String IO = args[0];
+        String type = args[1];
+        csvName = args[2];
 
-            //Try writing all users to CSV
-            try{
-                new UserCsvPopulator().writeToCsv(userService);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        switch (type) {
+            case companies:
+                switch (IO) {
+                    case input:
+                        writeCompaniesToCsv(companyService);
+                        break;
+                    case export:
+                        readCompaniesFromCsv(companyService);
+                        break;
+                    default:
+                        System.out.println("You should choose either \"import\" or \"export\"");
+                        break;
+                }
+                break;
+            case events:
+                switch (IO) {
+                    case input:
+                        readEventsFromCsv(eventService);
+                        break;
+                    case export:
+                        writeEventsToCsv(eventService);
+                        break;
+                    default:
+                        System.out.println("You should choose either \"import\" or \"export\"");
+                        break;
+                }
+                break;
+            case users:
+                switch (IO) {
+                    case input:
+                        readUsersFromCsv(usersService);
+                        break;
+                    case export:
+                        writeUsersToCsv(usersService);
+                        break;
+                    default:
+                        System.out.println("You should choose either \"import\" or \"export\"");
+                        break;
+                }
+                break;
+            default:
+                System.out.println("Data type not entered correctly!");
+                break;
+        }
+
+        ctx.close();
+
+        logger.info("Finishing...");
+    }
 
 
-            //Try writing all companies to CSV
-            try {
-                new CompanyCsvPopulator().writeToCSV(companyService);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public static class CsvPopulators {
 
 
-            //Try writing all events to CSV
-            try {
-                new EventCsvPopulator().writeToCsv(eventService);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else if(args[0].compareTo(input) == 0){
-
-
-            //import all users
-            try{
-                new UserCsvPopulator().readFromCsv(userService);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-            //Import all companies
+        static void readCompaniesFromCsv(CompanyService companyService) {
             try {
                 new CompanyCsvPopulator().readFromCSV(companyService);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
 
-            //Import all events
+        static void readEventsFromCsv(EventService eventService) {
             try {
                 new EventCsvPopulator().readFromCsv(eventService);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-        } else {
-            System.out.println("Invalid input, valid options are: " + input + " and " + export);
         }
 
-        //---------------------------------------------------------------------------------------
+        static void readUsersFromCsv(UserService userService) {
+            try {
+                new UserCsvPopulator().readFromCsv(userService);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-        TaskService taskService = ctx.getBean(TaskService.class);
-        taskService.getTaskByStatus(TaskStatus.ACCEPTED);
+        static void writeCompaniesToCsv(CompanyService companyService) {
+            try {
+                new CompanyCsvPopulator().writeToCSV(companyService);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-        companyService.getCompanies()
-                .forEach(System.out::println);
+        static void writeEventsToCsv(EventService eventService) {
+            try {
+                new EventCsvPopulator().writeToCsv(eventService);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-        userService
-            .getAllUsers()
-            .forEach(System.out::println);
-
-        eventService.getEvents()
-            .forEach(System.out::println);
-
-        //---------------------------------------------------------------------------------------
-
-        ctx.close(); // you should always close context in the end
-
-        logger.info("Finishing...");
+        static void writeUsersToCsv(UserService userService) {
+            try {
+                new UserCsvPopulator().writeToCsv(userService);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
-
 }
+
+
+

@@ -1,5 +1,6 @@
 package hr.eestec_zg.populator.csv.company;
 
+import static hr.eestec_zg.populator.Populator.csvName;
 import static hr.eestec_zg.populator.csv.CsvHelpers.companyToStringArray;
 import static hr.eestec_zg.populator.csv.CsvHelpers.createFileIfFileDoesNotExist;
 
@@ -17,15 +18,14 @@ import java.util.List;
 
 public class CompanyCsvPopulator {
 
-  private static String companiesCSV = "companies.csv";
 
   public CompanyCsvPopulator() throws IOException {
-    createFileIfFileDoesNotExist(companiesCSV);
+    createFileIfFileDoesNotExist(csvName);
   }
 
   public void readFromCSV(CompanyService companyService) throws IOException {
     List<CompanyCsv> companyList;
-    FileReader file = new FileReader(companiesCSV);
+    FileReader file = new FileReader(csvName);
     CsvToBeanBuilder<CompanyCsv> csvToBeanBuilder = new CsvToBeanBuilder<>(file);
     CsvToBean<CompanyCsv> csvToBean = csvToBeanBuilder
         .withType(CompanyCsv.class)
@@ -48,7 +48,7 @@ public class CompanyCsvPopulator {
   }
 
   public void writeToCSV(CompanyService companyService) throws IOException {
-    CSVWriter writer = new CSVWriter(new FileWriter(companiesCSV), ',');
+    CSVWriter writer = new CSVWriter(new FileWriter(csvName), ',');
     List<String[]> data = new ArrayList<>();
     //add header
     //data.add(new String[]{"name", "shortName", "webAddress", "address", "notes", "type"});

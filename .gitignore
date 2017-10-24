@@ -1,6 +1,5 @@
 target
 /.idea
 /*.iml
-companies.csv
-users.csv
-events.csv
+/*.csv
+

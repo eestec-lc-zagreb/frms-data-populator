@@ -1,5 +1,6 @@
 package hr.eestec_zg.populator.csv.event;
 
+import static hr.eestec_zg.populator.Populator.csvName;
 import static hr.eestec_zg.populator.csv.CsvHelpers.createFileIfFileDoesNotExist;
 import static hr.eestec_zg.populator.csv.CsvHelpers.eventToStringArray;
 
@@ -16,15 +17,13 @@ import java.util.List;
 
 public class EventCsvPopulator {
 
-  private static String eventsCSV = "events.csv";
-
   public EventCsvPopulator() throws IOException {
-    createFileIfFileDoesNotExist(eventsCSV);
+    createFileIfFileDoesNotExist(csvName);
   }
 
   public void readFromCsv(EventService eventService) throws FileNotFoundException {
     List<EventCsv> eventList =
-        new CsvToBeanBuilder<EventCsv>(new FileReader(eventsCSV))
+        new CsvToBeanBuilder<EventCsv>(new FileReader(csvName))
             .withType(EventCsv.class)
             .withOrderedResults(true)
             .build()
@@ -39,7 +38,7 @@ public class EventCsvPopulator {
   }
 
   public void writeToCsv(EventService eventService) throws IOException {
-    CSVWriter writer = new CSVWriter(new FileWriter(eventsCSV), ',');
+    CSVWriter writer = new CSVWriter(new FileWriter(csvName), ',');
     List<String[]> data = new ArrayList<>();
     for (Event event : eventService.getEvents()) {
       data.add(eventToStringArray(event));

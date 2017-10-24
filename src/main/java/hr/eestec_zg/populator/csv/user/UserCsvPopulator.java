@@ -1,6 +1,7 @@
 package hr.eestec_zg.populator.csv.user;
 
 
+import static hr.eestec_zg.populator.Populator.csvName;
 import static hr.eestec_zg.populator.csv.CsvHelpers.createFileIfFileDoesNotExist;
 import static hr.eestec_zg.populator.csv.CsvHelpers.userToStringArray;
 
@@ -18,15 +19,14 @@ import java.util.List;
 
 public class UserCsvPopulator {
 
-  private static String usersCSV = "users.csv";
 
   public UserCsvPopulator() throws IOException {
-    createFileIfFileDoesNotExist(usersCSV);
+    createFileIfFileDoesNotExist(csvName);
   }
 
   public void readFromCsv(UserService userService) throws FileNotFoundException {
     List<UserCsv> userList =
-        new CsvToBeanBuilder<UserCsv>(new FileReader(usersCSV))
+        new CsvToBeanBuilder<UserCsv>(new FileReader(csvName))
             .withType(UserCsv.class)
             .withOrderedResults(true)
             .build()
@@ -45,7 +45,7 @@ public class UserCsvPopulator {
   }
 
   public void writeToCsv(UserService userService) throws IOException {
-    CSVWriter writer = new CSVWriter(new FileWriter(usersCSV), ',');
+    CSVWriter writer = new CSVWriter(new FileWriter(csvName), ',');
     List<String[]> data = new ArrayList<>();
     for (User user : userService.getAllUsers()) {
       data.add(userToStringArray(user));
